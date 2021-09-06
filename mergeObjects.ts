@@ -7,10 +7,9 @@ type Merge<A extends any[]> = UnionToIntersection<A[number]>
 
 const isObjectOnly = <T>(obj: T): boolean => typeof obj === 'object' && !Array.isArray(obj)
 
+export const mergeObjects = <T extends Record<string,any>, Z extends Record<string,any>>(first: T, second: Z): Merge<[T, Z]>  => {
 
-export const mergeObjects = <T extends { [key: string]: any}, Z extends { [key: string]: any}>(first: T, second: Z): Merge<[T, Z]> => {
-
-    const newObject: any  = {...first}
+    const newObject = {...first} as Record<string, any>
 
     if (isObjectOnly(first) && isObjectOnly(second)) {
 
@@ -40,6 +39,7 @@ export const mergeObjects = <T extends { [key: string]: any}, Z extends { [key: 
 
     }
 
-    return newObject
+    return newObject as Merge<[T,Z]>
 }
+
 
